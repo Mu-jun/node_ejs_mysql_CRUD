@@ -22,7 +22,9 @@ router
         },{
             fields: ['title','content','author','c_date']
         })
-        .then(result=>res.redirect('/'))
+        .then(result=>{
+            res.send('<script> alert("성공"); window.location.href="/"; </script>')
+        })
         .catch((err) => {
             console.error(err);
             next(err);

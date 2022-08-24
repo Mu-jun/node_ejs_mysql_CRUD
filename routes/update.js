@@ -22,21 +22,23 @@ router
     })
     .post('/:id', (req, res, next) => {
         const id = req.params.id
-        console.log('post update',id)
+        console.log('post update', id)
 
         const body = req.body;
         bbs.update({
-            title:body.title,
-            content:body.content,
-            u_date:now(),
-        },{
-            where:{bbs_id:id}
+            title: body.title,
+            content: body.content,
+            u_date: now(),
+        }, {
+            where: { bbs_id: id }
         })
-        .then(result=>res.redirect('/'))
-        .catch(err => {
-            console.log(err);
-            next(err);
-        })
+            .then(result => {
+                res.send('<script> alert("성공"); window.location.href="/"; </script>')
+            })
+            .catch(err => {
+                console.log(err);
+                next(err);
+            })
     })
 
 module.exports = router;
