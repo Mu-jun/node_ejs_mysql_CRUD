@@ -33,7 +33,7 @@ router
             where: { bbs_id: id }
         })
             .then(result => {
-                res.send('<script> alert("성공"); window.location.href="/"; </script>')
+                res.send(`<script> alert("성공"); window.location.href="/detail/${id}"; </script>`)
             })
             .catch(err => {
                 console.log(err);
