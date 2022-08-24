@@ -23,7 +23,8 @@ function del_bbs(id) {
             .then(res => {
                 if (res.ok) {
                     alert("삭제되었습니다.");
-                    window.location.href='/';
+                    history.back();
+                    location.href = document.referrer;
                 } else {
                     alert(res.statusText);
                 }
