@@ -19,9 +19,8 @@ router
             content:content,
             author:"admin",
             c_date:now(),
-            u_date:now()
         },{
-            fields: ['title','content','author','c_date','u_date']
+            fields: ['title','content','author','c_date']
         })
         .then(result=>res.redirect('/'))
         .catch((err) => {

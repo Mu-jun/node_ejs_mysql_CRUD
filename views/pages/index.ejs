@@ -21,10 +21,14 @@
                 </tr>
             </thead>
             <tbody>
-                <% function formatDate(d_t) { let year=d_t.getFullYear(); let month=("0" + (d_t.getMonth() +
-                    1)).slice(-2); let day=("0" + d_t.getDate()).slice(-2); let hour=d_t.getHours(); let
-                    minute=d_t.getMinutes(); let seconds=d_t.getSeconds(); return year + "-" + month + "-" + day + " " +
-                    hour + ":" + minute + ":" + seconds } %>
+                <% function formatDate(d_t) {
+                    let year=d_t.getFullYear();
+                    let month=("0" + (d_t.getMonth() + 1)).slice(-2);
+                    let day=("0" + d_t.getDate()).slice(-2);
+                    let hour=("0" + d_t.getHours()).slice(-2);
+                    let minute=("0" + d_t.getMinutes()).slice(-2);
+                    let seconds=("0" + d_t.getSeconds()).slice(-2);
+                    return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + seconds } %>
                     <% data.rows.forEach(function(item, index) { %>
                         <tr>
                             <td>
@@ -43,7 +47,7 @@
                                 <%= formatDate(item.c_date) %>
                             </td>
                             <td>
-                                <%= formatDate(item.u_date) %>
+                                <%= item.u_date? formatDate(item.u_date):'' %>
                             </td>
                         </tr>
                         <% }); %>
