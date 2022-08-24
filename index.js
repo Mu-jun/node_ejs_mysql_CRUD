@@ -10,6 +10,7 @@ const listRouter = require('./routes/list');
 const createRouter = require('./routes/create');
 const updateRouter = require('./routes/update');
 const detailRouter = require('./routes/detail');
+const deleteRouter = require('./routes/delete');
 
 let sequelize = require('./models/index').sequelize;
 sequelize.sync();
@@ -46,5 +47,6 @@ app
     .use('/write', createRouter)
     .use('/update', updateRouter)
     .use('/detail', detailRouter)
+    .use('/delete', deleteRouter)
     .use('/list', listRouter)
     .listen(PORT, () => console.log(`Listening on ${PORT}`));
