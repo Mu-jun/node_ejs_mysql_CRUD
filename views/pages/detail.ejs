@@ -7,11 +7,25 @@
 
 <body>
     <%- include ("../partials/nav.ejs") %>
-    <p>제목 : <%= data.title %></p>
-    <p>작성자 : <%= data.author %></p>
-    <!-- <p>내용</p> -->
-    <textarea style="width: 90%; margin: 10px;"><%= data.content %></textarea>
-    <div style="justify-content: space-between;"></div>
-    <a class="btn btn-primary" href="/update/<%= data.bbs_id %>">수정</a>
-    <a class="btn btn-primary" href="/delete/<%= data.bbs_id %>">삭제</a>
+    <% function formatDate(d_t) {
+        let year=d_t.getFullYear();
+        let month=("0" + (d_t.getMonth() + 1)).slice(-2);
+        let day=("0" + d_t.getDate()).slice(-2);
+        let hour=("0" + d_t.getHours()).slice(-2);
+        let minute=("0" + d_t.getMinutes()).slice(-2);
+        let seconds=("0" + d_t.getSeconds()).slice(-2);
+        return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + seconds } %>
+        <div class="container">
+            <p>제목 : <%= data.title %></p>
+            <p>작성자 : <%= data.author %></p>
+            <p>작성시간 : <%= formatDate(data.c_date) %></p>
+            <% if (data.u_date) { %>
+                <p>수정시간 : <%= formatDate(data.u_date) %></p>
+            <% } %>
+            <!-- <p>내용</p> -->
+            <textarea style="width: 90%; margin: 10px;"><%= data.content %></textarea>
+            <div style="justify-content: space-between;"></div>
+            <a class="btn btn-primary" href="/update/<%= data.bbs_id %>">수정</a>
+            <a class="btn btn-primary" href="/delete/<%= data.bbs_id %>">삭제</a>
+        </div>
 </body>
