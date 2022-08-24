@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <%- include ("../partials/header.ejs") %>
+</head>
+
+<body>
+    <%- include ("../partials/nav.ejs") %>
+        <div class="container">
+            <form method="post">
+                <div class="mb-3">
+                    <label for="bbs_id" class="form-label">bbs_id</label>
+                    <input type="text" class="form-control" name="bbs_id" id="bbs_id" value="<%= bbs_id %>" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="title" class="form-label">title</label>
+                    <input type="text" class="form-control" name="title" id="title" value="<%= title %>">
+                </div>
+                <div class="mb-3">
+                    <p for="content" class="form-label">content</p>
+                    <textarea class="form-control" name="content" id="content" rows="10"><%= content %></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">save</button>
+            </form>
+        </div>
+</body>
