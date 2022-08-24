@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 5000;
 const cors = require('cors');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 const listRouter = require('./routes/list');
 const createRouter = require('./routes/create');
@@ -20,6 +21,7 @@ app.use(cors({
     origin: true,
     credentials: true
 }));
+
 app.use(cookieParser());
 app.use(
     session({
@@ -32,12 +34,16 @@ app.use(
         }
     })
 );
+
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+
 app
     .use(express.static(path.join(__dirname, 'public')))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
-    .get('/write', (req, res)=>res.render('pages/write'))
     .get('/', (req, res)=>res.redirect('/list/1'))
+    .use('/write', createRouter)
     .use('/update', updateRouter)
     .use('/detail', detailRouter)
     .use('/list', listRouter)
