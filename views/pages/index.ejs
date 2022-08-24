@@ -76,21 +76,21 @@
             <% if (page < 4) { 
                 for (let i = 1; i < 6; i++) {
                     if (page==i) { %>
-                        <li class="page-item disabled"><a style="pointer-events: none;"><%= i %></a></li>
+                        <li class="page-item disabled"><a class="current_page"><%= i %></a></li>
                     <% } else { %>
                         <li class="page-item"><a href="/list/<%= i %>"><%= i %></a></li>
                 <% }} %>
             <% } else if ( page > end_page-3 ) {
                 for (let i = end_page-5; i <= end_page; i++) {
                     if (page==i) { %>
-                        <li class="page-item disabled"><a style="pointer-events: none;"><%= i %></a></li>
+                        <li class="page-item disabled"><a class="current_page"><%= i %></a></li>
                     <% } else { %>
                         <li class="page-item"><a href="/list/<%= i %>"><%= i %></a></li>
                 <% }} %>
             <% } else {
                 for (let i = page-2; i < page+3; i++) {
                     if (page==i) { %>
-                        <li class="page-item disabled"><a style="pointer-events: none;"><%= i %></a></li>
+                        <li class="page-item disabled"><a class="current_page"><%= i %></a></li>
                     <% } else { %>
                         <li class="page-item"><a href="/list/<%= i %>"><%= i %></a></li>
                 <% }} %>
