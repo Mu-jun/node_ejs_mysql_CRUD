@@ -5,8 +5,8 @@ let bbs = require('../models').bbs;
 let router = express.Router();
 
 router
-    .get('/', (req, res)=>res.render('pages/write'))
-    .post('/', (req,res, next)=>{
+    .get('/', (req, res) => res.render('pages/write'))
+    .post('/', (req, res, next) => {
         console.log("create post")
         // const body = req.body;
         // console.log(body)
@@ -14,22 +14,26 @@ router
         const title = req.body.title;
         const content = req.body.content;
         // console.log("title",title,"content",content)
-        bbs.create({
-            title:title,
-            content:content,
-            author:"admin",
-            c_date:now(),
-        },{
-            fields: ['title','content','author','c_date']
-        })
-        .then(result=>{
-            res.send('<script> alert("성공"); window.location.href="/"; </script>')
-        })
-        .catch((err) => {
-            console.error(err);
-            next(err);
-        });
-        
+        if (!title.trim()) {
+            res.send(`<script>alert("title을 입력해주세요."); history.back()</script>`);
+        } else {
+            bbs
+                .create({
+                    title: title,
+                    content: content,
+                    author: "admin",
+                    c_date: now(),
+                }, {
+                    fields: ['title', 'content', 'author', 'c_date']
+                })
+                .then(result => {
+                    res.send('<script> alert("성공"); window.location.href="/"; </script>')
+                })
+                .catch((err) => {
+                    console.error(err);
+                    next(err);
+                });
+        }
     })
 
 module.exports = router;
