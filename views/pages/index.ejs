@@ -2,26 +2,26 @@
 <html lang="ko">
 
 <head>
-    <%- include ("../partials/header.ejs") %>
+  <%- include ("../partials/header.ejs") %>
 </head>
 
 <body>
-    <%- include ("../partials/nav.ejs") %>
-        <h2>CRUD TEST Page <%= page %>
-        </h2>
-        <a class="btn btn-primary" href="/write">글쓰기</a>
-        <table class="table">
-            <thead>
-                <tr class="table-dark">
-                    <th>id</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성시간</th>
-                    <th>수정시간</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% function formatDate(d_t) {
+  <%- include ("../partials/nav.ejs") %>
+  <div class="container">
+    <h2>CRUD TEST Page <%= page %></h2>
+    <a class="btn btn-primary" href="/write">글쓰기</a>
+    <table class="table">
+      <thead>
+        <tr class="table-dark">
+          <th>id</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>작성시간</th>
+          <th>수정시간</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% function formatDate(d_t) {
                     let year=d_t.getFullYear();
                     let month=("0" + (d_t.getMonth() + 1)).slice(-2);
                     let day=("0" + d_t.getDate()).slice(-2);
@@ -29,88 +29,91 @@
                     let minute=("0" + d_t.getMinutes()).slice(-2);
                     let seconds=("0" + d_t.getSeconds()).slice(-2);
                     return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + seconds } %>
-                    <% data.rows.forEach(function(item, index) { %>
-                        <tr>
-                            <td>
-                                <%= item.bbs_id %>
-                            </td>
-                            <td>
-                                <a href="/detail/<%= item.bbs_id %>">
-                                    <%= item.title %>
-                                </a>
-                            </td>
-                            <td>
-                                <%= item.author %>
-                            </td>
+        <% data.rows.forEach(function(item, index) { %>
+        <tr>
+          <td>
+            <%= item.bbs_id %>
+          </td>
+          <td>
+            <a href="/detail/<%= item.bbs_id %>">
+              <%= item.title %>
+            </a>
+          </td>
+          <td>
+            <%= item.author %>
+          </td>
 
-                            <td>
-                                <%= formatDate(item.c_date) %>
-                            </td>
-                            <td>
-                                <%= item.u_date? formatDate(item.u_date):'' %>
-                            </td>
-                        </tr>
-                        <% }); %>
-            </tbody>
-        </table>
-        <!-- 페이징처리 시작 -->
-        <ul class="pagination" style="display:flex; justify-content: center;">
-            <!-- 처음 & 이전페이지 -->
-            <% if (page==1) { %>
-                <li class="page-item disabled"><a style="pointer-events: none;">
-                        << </a>
-                </li>
-                <li class="page-item disabled"><a style="pointer-events: none;">
-                        < </a>
-                </li>
-            <% } else { %>
-                <li class="page-item"><a href="/list/1">
-                        << </a>
-                </li>
-                <li class="page-item"><a href="/list/<%= page-1 %>">
-                        < </a>
-                </li>
-            <% } %>
-            <!-- 페이지 리스트 -->
-            <% let end_page = parseInt((data.count-1)/10)+1; console.log("count : ",data.count,"end page:", end_page) %>
-            <% if (page < 4) { 
+          <td>
+            <%= formatDate(item.c_date) %>
+          </td>
+          <td>
+            <%= item.u_date? formatDate(item.u_date):'' %>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <!-- 페이징처리 시작 -->
+    <ul class="pagination" style="display:flex; justify-content: center;">
+      <!-- 처음 & 이전페이지 -->
+      <% if (page==1) { %>
+      <li class="page-item disabled"><a style="pointer-events: none;">
+          << </a>
+      </li>
+      <li class="page-item disabled"><a style="pointer-events: none;">
+
+          < </a>
+      </li>
+      <% } else { %>
+      <li class="page-item"><a href="/list/1">
+          << </a>
+      </li>
+      <li class="page-item"><a href="/list/<%= page-1 %>">
+
+          < </a>
+      </li>
+      <% } %>
+      <!-- 페이지 리스트 -->
+      <% let end_page = parseInt((data.count-1)/10)+1; console.log("count : ",data.count,"end page:", end_page) %>
+      <% if (page < 4) { 
                 for (let i = 1; i < 6; i++) {
                     if (page==i) { %>
-                        <li class="page-item disabled"><a class="current_page"><%= i %></a></li>
-                    <% } else { %>
-                        <li class="page-item"><a href="/list/<%= i %>"><%= i %></a></li>
-                <% }} %>
-            <% } else if ( page > end_page-3 ) {
+      <li class="page-item disabled"><a class="current_page"><%= i %></a></li>
+      <% } else { %>
+      <li class="page-item"><a href="/list/<%= i %>"><%= i %></a></li>
+      <% }} %>
+      <% } else if ( page > end_page-3 ) {
                 for (let i = end_page-5; i <= end_page; i++) {
                     if (page==i) { %>
-                        <li class="page-item disabled"><a class="current_page"><%= i %></a></li>
-                    <% } else { %>
-                        <li class="page-item"><a href="/list/<%= i %>"><%= i %></a></li>
-                <% }} %>
-            <% } else {
+      <li class="page-item disabled"><a class="current_page"><%= i %></a></li>
+      <% } else { %>
+      <li class="page-item"><a href="/list/<%= i %>"><%= i %></a></li>
+      <% }} %>
+      <% } else {
                 for (let i = page-2; i < page+3; i++) {
                     if (page==i) { %>
-                        <li class="page-item disabled"><a class="current_page"><%= i %></a></li>
-                    <% } else { %>
-                        <li class="page-item"><a href="/list/<%= i %>"><%= i %></a></li>
-                <% }} %>
-            <% } %>
-            <!-- 다음 & 마지막페이지 -->
-            <% if (data.count <= page*10 ) { %>
-                <li class="page-item disabled"><a style="pointer-events: none;">
-                    > </a>
-                </li>
-                <li class="page-item disabled"><a style="pointer-events: none;">
-                    >> </a>
-                </li>
-            <% } else { %>
-                <li class="page-item"><a href="/list/<%= page+1 %>">
-                    > </a>
-                </li>
-                <li class="page-item"><a href="/list/<%= end_page %>">
-                    >> </a>
-                </li>
-            <% } %>
-        </ul>
-        <!-- 페이징처리 끝 -->
+      <li class="page-item disabled"><a class="current_page"><%= i %></a></li>
+      <% } else { %>
+      <li class="page-item"><a href="/list/<%= i %>"><%= i %></a></li>
+      <% }} %>
+      <% } %>
+      <!-- 다음 & 마지막페이지 -->
+      <% if (data.count <= page*10 ) { %>
+      <li class="page-item disabled"><a style="pointer-events: none;">
+          > </a>
+      </li>
+      <li class="page-item disabled"><a style="pointer-events: none;">
+          >> </a>
+      </li>
+      <% } else { %>
+      <li class="page-item"><a href="/list/<%= page+1 %>">
+          > </a>
+      </li>
+      <li class="page-item"><a href="/list/<%= end_page %>">
+          >> </a>
+      </li>
+      <% } %>
+    </ul>
+    <!-- 페이징처리 끝 -->
+  </div>
 </body>

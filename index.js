@@ -36,14 +36,19 @@ app.use(
     })
 );
 
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    limit: "4gb",
+    extended: true
+}));
+app.use(bodyParser.json({
+    limit: "4gb",
+}));
 
 app
     .use(express.static(path.join(__dirname, 'public')))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
-    .get('/', (req, res)=>res.redirect('/list/1'))
+    .get('/', (req, res) => res.redirect('/list/1'))
     .use('/write', createRouter)
     .use('/update', updateRouter)
     .use('/detail', detailRouter)
