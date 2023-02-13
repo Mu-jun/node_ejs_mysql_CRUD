@@ -3,16 +3,6 @@
 
 <head>
   <%- include ("../partials/header.ejs") %>
-
-  <!-- https://github.com/JiHong88/suneditor -->
-  <!-- SunEditor (^2.44.3) -->
-  <!-- Use version 2.x.x -->
-  <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor-contents.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
-  <!-- languages (Basic Language: English/en) -->
-  <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ko.js"></script>
 </head>
 
 <body>
@@ -35,38 +25,28 @@
     <p>수정시간 : <%= formatDate(data.u_date) %></p>
     <% } %>
     <!-- <p>내용</p> -->
-    <textarea id="content" style="width: 90%; margin: 10px;" disabled></textarea>
+    <textarea id="editor" style="width: 90%; margin: 10px;" disabled><%= data.content %></textarea>
     <div style="justify-content: space-between;"></div>
     <a class="btn btn-primary" href="/update/<%= data.bbs_id %>">수정</a>
     <button class="btn btn-primary" onclick="del_bbs('<%= data.bbs_id %>');">삭제</button>
   </div>
-  
-  <!-- https://github.com/codemirror/CodeMirror -->
-  <!-- codeMirror (^5.0.0) -->
-  <!-- Use version 5.x.x -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/htmlmixed/htmlmixed.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/xml/xml.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/css/css.js"></script>
-  <!-- https://github.com/KaTeX/KaTeX -->
-  <!-- KaTeX (^0.11.1) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+
+  <script src="/build/ckeditor.js"></script>
   <script>
-    const editorInstance = SUNEDITOR.create('content', {
-        mode: 'balloon',
-        display: 'block',
-        width: '100%',
-        height: 'auto',
-        popupDisplay: 'full',
-        buttonList: [
-            ['fontSize', 'fontColor', 'bold', 'underline', 'align', 'horizontalRule', 'table', 'codeView']
-        ],
-    });
-  </script>
-  <script>
-    editorInstance.setContents(`<%- data.content %>`)
-    editorInstance.disabled()
+    ClassicEditor
+      .create(document.querySelector('#editor'))
+      .then(editor => {
+        window.editor = editor;
+        editor.enableReadOnlyMode("editor");
+        
+        const toolbarElement = editor.ui.view.toolbar.element;
+        toolbarElement.style.display = 'none';
+      })
+      .catch(error => {
+        console.error('Oops, something went wrong!');
+        console.error('Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
+        console.warn('Build id: pwpxdw4bejft-94vwzinfv51s');
+        console.error(error);
+      });
   </script>
 </body>
